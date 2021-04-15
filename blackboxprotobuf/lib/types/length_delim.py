@@ -135,6 +135,8 @@ def decode_message(buf, typedef=None, pos=0, end=None, group=False):
     """Decode a protobuf message with no length delimiter"""
     if end is None:
         end = len(buf)
+    elif len(buf) < end or pos >= end:
+        raise decoder._DecodeError("Invalid Message Length")
 
     if typedef is None:
         typedef = {}
@@ -229,7 +231,7 @@ def decode_message(buf, typedef=None, pos=0, end=None, group=False):
                     if 'alt_typedefs' in field_typedef:
                         # get the next higher alt field number
                         alt_field_number = str(
-                            max(map(int, field_tyepdef['alt_typedefs'].keys()))
+                            max(map(int, field_typedef['alt_typedefs'].keys()))
                             + 1)
                     else:
                         field_typedef['alt_typedefs'] = {}
