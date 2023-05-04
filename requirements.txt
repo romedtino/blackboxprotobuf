@@ -1,1 +1,1 @@
-protobuf>=3.5.0.post1, < 4.0dev
+protobuf>=3.5.0.post1
